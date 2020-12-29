@@ -1,25 +1,71 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState,useEffect } from 'react';
+import axios from 'axios';
 
-function App() {
+// css styling 
+import "./style/css/bootstrap.min.css"
+import StartGame from './components/StartGame';
+import {GlobalStyle} from "./style/App.styles"
+
+
+
+const App = () => {
+  const [cat_id, setCatId] = useState(0);
+  const [cat_name, setCatName] = useState("")
+  const [categories, setCategories] = useState([]);
+
+  // getting the categories from API. 
+  useEffect(() => {
+    axios.get("https://opentdb.com/api_category.php")
+      .then(res =>{
+        setCategories(res.data.trivia_categories)
+      })
+      .catch(err =>{
+      })
+  }, [])
+  
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <GlobalStyle/>
+      <>
+        <header className="text-center">
+          <h1>Quiz Trivia </h1>
+        </header>
+        
+        {cat_id === 0 ? 
+          <div className="row">
+
+
+            <div className="card-deck">
+            {
+            categories.map( ({id , name}, key) => {
+            return (
+              <div className="col-md-4 col-sm-12" key={id}>
+                  <div className="card border-warning  text-center"  >
+                      <div className="card-body">
+                        <div className="card-title" style={{height:"50px"}}>
+                          {name}
+                        </div>
+                          <button className="btn btn-warning" onClick={e => {setCatId(id); setCatName(name); }} key={id}>Start Quiz</button>
+                      </div>
+                      {/* <div className="card-footer"></div> */}
+                    </div>
+                    <br/>
+                    <br/>
+                </div>
+                )
+                })}
+              </div>
+              
+
+          </div> 
+          : 
+          <StartGame id={cat_id} name={cat_name}/>
+          }
+
+      
+      </>
+    </>
   );
 }
 
