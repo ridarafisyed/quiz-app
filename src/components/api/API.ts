@@ -1,4 +1,4 @@
-import axios from "axios" 
+// import axios from "axios" 
 import {shuffleArray} from '../utils/utils'
 
 export type Question ={

@@ -51,10 +51,45 @@ const StartGame:React.FC<Props> =({id, name}) => {
         setLoading(false);
     }
 
-    const nextLevel = () => {
-        if (level < 3){
-            setLevel(level + 1);
-        }
+    // const nextLevel = async () =>{
+        
+    //     setLoading(true);
+    //     setGameOver(false);  
+    //     setLevel(level+1)
+
+    //     const difficulty = () =>{
+    //         if (level === 0) return Difficulty.EASY;
+    //         else if (level === 1) return Difficulty.MEDIUM;
+    //         else return Difficulty.HARD
+    //     }  
+        
+
+    //     const newQuestions = await fetchQuestions(TOTAL_QUESTIONS, difficulty(),id);
+    //     setQuestions(newQuestions);
+    //     setScore(0)
+    //     setNumber(0)
+    //     setUserAnswers([])
+    //     setLoading(false);
+    // }
+
+    const nextLevel = async() => {
+        setLoading(true);
+        setGameOver(false); 
+        setLevel(level + 1) 
+
+        const difficulty = () =>{
+            if (level === 0) return Difficulty.EASY;
+            else if (level === 1) return Difficulty.MEDIUM;
+            else return Difficulty.HARD
+        }  
+        
+
+        const newQuestions = await fetchQuestions(TOTAL_QUESTIONS, difficulty(),id);
+        setQuestions(newQuestions);
+        setScore(0)
+        setNumber(0)
+        setUserAnswers([])
+        setLoading(false);
     }
 
     // function when user select the answer
@@ -96,14 +131,32 @@ const StartGame:React.FC<Props> =({id, name}) => {
                     <p>Lets Start Quiz</p>
                     <button className='btn btn-success start' onClick={startQuiz}>
                         Start
-                    </button>
+                    </button>                    
                     <p>Want some other category... </p>
                     <button className='btn btn-success start' onClick={()=> window.location.reload(false)}>
                         Categories
                     </button>
+                    
                 </div>
                 ) : null}
-            {/* {!gameOver ? <p className='score'>Score: {score}</p> : null} */}
+                { level !== 0  ?(
+                    <div>
+                        <h3>{name}</h3>
+                        <p>Lets Start Quiz</p>
+                        <button className='btn btn-success start' onClick={startQuiz}>
+                            Start
+                        </button> 
+                        <button className="btn btn-primary start" onClick={nextLevel}> Next Level</button>
+                        <p>Want some other category... </p>
+                        <button className='btn btn-success start' onClick={()=> window.location.reload(false)}>
+                            Categories
+                        </button>
+                    </div>
+                ): null
+                
+            }
+
+            
             {loading ? <p>Loading Questions...</p> : null}
             {!loading && !gameOver && userAnswers.length !== TOTAL_QUESTIONS ? (
             <Questions
