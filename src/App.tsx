@@ -4,7 +4,7 @@ import axios from 'axios';
 // css styling 
 import "./style/css/bootstrap.min.css"
 import StartGame from './components/StartGame';
-import {GlobalStyle} from "./style/App.styles"
+import {GlobalStyle, Wrapper} from "./style/App.styles"
 
 
 
@@ -27,8 +27,8 @@ const App = () => {
   return (
     <>
       <GlobalStyle/>
-      <>
-        <header className="text-center">
+      <Wrapper>
+        <header className="heading text-center">
           <h1>Quiz Trivia </h1>
         </header>
         
@@ -41,7 +41,7 @@ const App = () => {
             categories.map( ({id , name}, key) => {
             return (
               <div className="col-md-4 col-sm-12" key={id}>
-                  <div className="card border-warning  text-center"  >
+                  <div className=" category-card card border-warning  text-center"  >
                       <div className="card-body">
                         <div className="card-title" style={{height:"50px"}}>
                           {name}
@@ -64,7 +64,7 @@ const App = () => {
           }
 
       
-      </>
+      </Wrapper>
     </>
   );
 }

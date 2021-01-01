@@ -3,7 +3,7 @@ import {AnswerObject} from './StartGame'
 
 // styling 
 
-import {Wrapper, ButtonWrapper} from "../style/QuestionCard.styles"
+import {QuestionCard, ButtonWrapper} from "../style/QuestionCard.styles"
 
 type Props ={
     question: string;
@@ -13,30 +13,39 @@ type Props ={
     questionNo: number;
     totalQuestions: number;
     score: number;
+    level: number;
+    subject: string;
 };
 
- const Questions:React.FC<Props> =({question,answers,callback,userAnswer,questionNo,totalQuestions,score,}) => (
+ const Questions:React.FC<Props> =({question,answers,callback,userAnswer,questionNo,totalQuestions,score,level, subject }) => (
 
   
         <div className="container text-center">
+            <div>
+                <h3>{subject}</h3>
+            </div>
 
+            {/* game status */}
             <div className="row">
                 <div className="col-6">
                     <p>Score: {score} </p>
                 </div>
                 <div className="col-6">
-                    <p>Questions {questionNo}/{totalQuestions}</p>
+                    <p>Level {level +1}/3</p>
                 </div>
-             
+               
             </div>
             
-            <div className=" row g-2">
-               <div className="card col-12">
-                <div className="card-body">
-                    <h5 className ="card-title" dangerouslySetInnerHTML ={{__html:question}}/></div>  
-                    <div className="">
-                    {
-                    answers.map((answer)=> (
+            {/* question card */}
+            <QuestionCard className="row">
+               <div className="question  col-sm-6 col-xs-12">
+                   <div className="">
+                       <h6>Question # {questionNo + 1} - {totalQuestions}</h6>
+                       <h5 className ="" dangerouslySetInnerHTML ={{__html:question}}/>
+                    </div>  
+                </div>
+                <div className=" options col-sm-6 col-xs-12  mx-auto d-block">
+                    {answers.map((answer)=> (
                             <ButtonWrapper key = {answer}
                             correct={userAnswer?.correctAnswer === answer}
                             userClicked={userAnswer?.answer === answer}> 
@@ -47,10 +56,8 @@ type Props ={
                                 <br/>
                             </ButtonWrapper>
                         ) )}
-                        </div>
-             </div>
-            </div>
-           
+                </div>
+          </QuestionCard>
         </div>
         
 

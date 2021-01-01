@@ -1,20 +1,27 @@
 import styled from "styled-components"
 
-export const Wrapper = styled.div`
 
-    max-width:100%;
-    background: #ebfeff;
+export const QuestionCard = styled.div`
     border-radius:10px;
-    border:2px solid #0085a3;
-    box-shadow:0px 5px 10px rgba(0,0,0,0.2);
-    text-align: center;
 
-    p{
-        font-size:1rem;
-    } // for specifing only p in the wrapper 
-    .score {} // for class .score
-    h1 {} 
-`
+    margin:2% 0 5% 0;
+    border:2px yellow;
+    box-shadow:0px 5px 10px #8B008B;
+    
+    .question{
+        background-color: #8B008B;
+        color: white;
+        border-radius:10px 0px 0px 10px;
+        margin:0;
+        padding:auto;
+
+        text-align: center;
+    }
+    .options{
+        margin:auto;        
+        padding-top:auto;
+    }
+`;
 
 type ButtonWrapperProps ={
     correct: boolean;
@@ -40,8 +47,8 @@ export const ButtonWrapper = styled.div<ButtonWrapperProps>`
             correct 
             ?'linear-gradient(90deg, #006400, #006400)' //green
             : !correct && userClicked 
-            ? 'linear-gradient(90deg, #8B0000, #8B0000)' 
-            : 'linear-gradient(90deg, #8B008B, #8B008B)'
+            ? 'linear-gradient(90deg, #8B0000, #8B0000)' //red
+            : 'linear-gradient(90deg, #8B008B, #8B008B)' //purple
         };
         border: 0.5px solid #fff;
         box-shadow: 1px 2px 0px rgba(0,0,0,0.1);
