@@ -3,7 +3,47 @@ import Questions from './Questions'
 // import Score from './Score'
 import {fetchQuestions,  QuestionState,  Difficulty} from './api/API'
 
-//styling
+//Material ui components 
+import {makeStyles,} from '@material-ui/core/styles';
+import {Paper, Button,  Container, Typography, CircularProgress } from "@material-ui/core/";
+
+const useStyles = makeStyles({
+  button:{
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    color: 'white',
+    display:"flex",
+    margin:"auto",
+    alignItems:"center",
+    
+  },
+  button_next:{
+      background: 'linear-gradient(45deg,#504BF2 30%, #40B38B 90%)',
+      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+      color: 'white',
+      display:"flex",
+      margin:20,
+      alignItems:"center",
+      float:"right",
+      
+  },
+  loading:{
+      display:"flex",
+      margin:"auto",
+      alignItems:"center",
+      alignContent:"center",
+
+  },
+  container:{
+      height:150,
+  },
+  card:{
+      margin:"auto",
+      alignItems:"center",
+      paddingTop:20,
+      paddingBottom:10,
+      height:200,
+}
+})
 
 export type AnswerObject = {
     question:string,
@@ -17,10 +57,11 @@ interface Props{
     name: string,
 }
 
-const TOTAL_QUESTIONS = 10;
-
+const TOTAL_QUESTIONS = 2;
 
 const StartGame:React.FC<Props> =({id, name}) => {
+
+    const classes = useStyles();
 
     const [loading, setLoading] = useState(false);
     const [questions, setQuestions] = useState<QuestionState[]>([]);
@@ -42,7 +83,6 @@ const StartGame:React.FC<Props> =({id, name}) => {
             else return Difficulty.HARD
         }  
         
-
         const newQuestions = await fetchQuestions(TOTAL_QUESTIONS, difficulty(),id);
         setQuestions(newQuestions);
         setScore(0)
@@ -50,27 +90,6 @@ const StartGame:React.FC<Props> =({id, name}) => {
         setUserAnswers([])
         setLoading(false);
     }
-
-    // const nextLevel = async () =>{
-        
-    //     setLoading(true);
-    //     setGameOver(false);  
-    //     setLevel(level+1)
-
-    //     const difficulty = () =>{
-    //         if (level === 0) return Difficulty.EASY;
-    //         else if (level === 1) return Difficulty.MEDIUM;
-    //         else return Difficulty.HARD
-    //     }  
-        
-
-    //     const newQuestions = await fetchQuestions(TOTAL_QUESTIONS, difficulty(),id);
-    //     setQuestions(newQuestions);
-    //     setScore(0)
-    //     setNumber(0)
-    //     setUserAnswers([])
-    //     setLoading(false);
-    // }
 
     const nextLevel = async() => {
         setLoading(true);
@@ -124,40 +143,32 @@ const StartGame:React.FC<Props> =({id, name}) => {
     }
 
     return (
-        <div className ="text-center ">
+        <Container className={classes.container}>
+            {/* starting game  */}
             {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
-                <div>
-                    <h3>{name}</h3>
-                    <p>Lets Start Quiz</p>
-                    <button className='btn btn-success start' onClick={startQuiz}>
+                <Paper elevation={3} className={classes.card}>
+                    <Typography variant="h5" component="h3" align="center">
+                        {name}
+                     </Typography>
+                    <Typography align="center">Lets Start Quiz</Typography>
+                    <Button className={classes.button} variant="contained" color="primary" onClick={startQuiz}>
                         Start
-                    </button>                    
-                    <p>Want some other category... </p>
-                    <button className='btn btn-success start' onClick={()=> window.location.reload(false)}>
+                    </Button>                    
+                    <Typography align="center">Want some other category... </Typography>
+                    <Button className={classes.button} variant="contained" color="primary" onClick={()=> window.location.reload(false)}>
                         Categories
-                    </button>
-                    
-                </div>
+                    </Button>
+                </Paper>
                 ) : null}
-                { level !== 0  ?(
-                    <div>
-                        <h3>{name}</h3>
-                        <p>Lets Start Quiz</p>
-                        <button className='btn btn-success start' onClick={startQuiz}>
-                            Start
-                        </button> 
-                        <button className="btn btn-primary start" onClick={nextLevel}> Next Level</button>
-                        <p>Want some other category... </p>
-                        <button className='btn btn-success start' onClick={()=> window.location.reload(false)}>
-                            Categories
-                        </button>
-                    </div>
-                ): null
-                
-            }
-
+            {/* loading game  */}
+            {loading ? 
+                <div className={classes.loading}>
+                    <CircularProgress  /> 
+                </div>
             
-            {loading ? <p>Loading Questions...</p> : null}
+            : null}
+
+            {/* question card */}
             {!loading && !gameOver && userAnswers.length !== TOTAL_QUESTIONS ? (
             <Questions
                 questionNo={number + 1}
@@ -172,11 +183,11 @@ const StartGame:React.FC<Props> =({id, name}) => {
             />
             ): null}
             {!gameOver && !loading && userAnswers.length === number + 1 && number !== TOTAL_QUESTIONS - 1 ? (
-          <button className='btn btn-success next' onClick={nextQuestion}>
+          <Button className={classes.button_next} onClick={nextQuestion}>
             Next Question
-          </button>
+          </Button>
         ) : null}
-        </div>
+        </Container>
     )
 }
 
