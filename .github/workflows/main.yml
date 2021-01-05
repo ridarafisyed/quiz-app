@@ -50,7 +50,7 @@ jobs:
         uses: dswistowski/surge-sh-action@v1.0.1
         with:
           # your surge.sh domain to deploy
-          domain: https://trivia-quiz-app.surge.sh
+          domain: https://quiz-trivia-app.surge.sh
           # surge.sh login
           login: ridarafisyed@gmail.com
           # surge.sh token, generate it with `surge token` command
