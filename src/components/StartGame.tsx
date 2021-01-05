@@ -91,25 +91,25 @@ const StartGame:React.FC<Props> =({id, name}) => {
         setLoading(false);
     }
 
-    const nextLevel = async() => {
-        setLoading(true);
-        setGameOver(false); 
-        setLevel(level + 1) 
+    // const nextLevel = async() => {
+    //     setLoading(true);
+    //     setGameOver(false); 
+    //     setLevel(level + 1) 
 
-        const difficulty = () =>{
-            if (level === 0) return Difficulty.EASY;
-            else if (level === 1) return Difficulty.MEDIUM;
-            else return Difficulty.HARD
-        }  
+    //     const difficulty = () =>{
+    //         if (level === 0) return Difficulty.EASY;
+    //         else if (level === 1) return Difficulty.MEDIUM;
+    //         else return Difficulty.HARD
+    //     }  
         
 
-        const newQuestions = await fetchQuestions(TOTAL_QUESTIONS, difficulty(),id);
-        setQuestions(newQuestions);
-        setScore(0)
-        setNumber(0)
-        setUserAnswers([])
-        setLoading(false);
-    }
+    //     const newQuestions = await fetchQuestions(TOTAL_QUESTIONS, difficulty(),id);
+    //     setQuestions(newQuestions);
+    //     setScore(0)
+    //     setNumber(0)
+    //     setUserAnswers([])
+    //     setLoading(false);
+    // }
 
     // function when user select the answer
     const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) =>{

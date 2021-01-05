@@ -3,7 +3,7 @@ import {AnswerObject} from './StartGame'
 
 // Material UI Components 
 import {makeStyles,} from '@material-ui/core/styles';
-import {Paper, Button, Grid, Card, CardContent, CardActions, Container, Typography} from "@material-ui/core/";
+import { Button, Grid, Card, CardContent, CardActions, Container, Typography} from "@material-ui/core/";
 
 const useStyles = makeStyles({
   button:{
@@ -54,20 +54,20 @@ type Props ={
 
  const Questions:React.FC<Props> =({question,answers,callback,userAnswer,questionNo,totalQuestions,score,level, subject }) => {
      const classes = useStyles();
-     const [selectionStyle, setSlectionStyle] = useState("linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)");
+    //  const [selectionStyle, setSlectionStyle] = useState("linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)");
 
-     const onSelectOption = (e: React.MouseEvent<HTMLButtonElement>) =>{
-          const selection = e.currentTarget.value;
-          if (userAnswer?.correctAnswer === selection){
-              setSlectionStyle('green');
-          }else if(userAnswer?.correctAnswer !== selection){
-              setSlectionStyle('red');
-          }
-          else {
-              setSlectionStyle('linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)')
-          }
-          callback(e);
-     }
+    //  const onSelectOption = (e: React.MouseEvent<HTMLButtonElement>) =>{
+    //       const selection = e.currentTarget.value;
+    //       if (userAnswer?.correctAnswer === selection){
+    //           setSlectionStyle('green');
+    //       }else if(userAnswer?.correctAnswer !== selection){
+    //           setSlectionStyle('red');
+    //       }
+    //       else {
+    //           setSlectionStyle('linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)')
+    //       }
+    //       callback(e);
+    //  }
      return (
          <Container>
              <Typography variant="h4" component="h2" align="center" >{subject}</Typography>
@@ -99,7 +99,7 @@ type Props ={
                                 <CardActions key = {answer}> 
                                     <Button 
                                         className={classes.button} variant="contained" color="primary"
-                                        disabled={!!userAnswer} value={answer} onClick={onSelectOption}>
+                                        disabled={!!userAnswer} value={answer} onClick={callback}>
                                         <span dangerouslySetInnerHTML={{__html: answer}}></span>
                                     </Button>
                                 </CardActions>
