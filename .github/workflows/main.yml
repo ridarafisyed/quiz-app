@@ -39,7 +39,7 @@ jobs:
         run: yarn build
 
       - name: Install Surge
-        run: npm install --global surge
+        run: npm install surge
         
       - name: Deploy to Surge 
         run: surge ./build https://trivia-quiz-app.surge.sh --token ${{ secrets.SURGE_TOKEN }}
